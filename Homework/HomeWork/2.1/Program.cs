@@ -2,6 +2,7 @@
 {
     using System;
     using System.Runtime.CompilerServices;
+    using System.Threading;
     using static System.Console;
 
     public static class Program
@@ -10,8 +11,10 @@
         {
             //TestAnimals();      // 2.1.1
             //MoveVehicles();     // 2.1.3
-            TestNodeInt();      // 2.1.4
+            //TestNodeInt();      // 2.1.4
+            TestStateMachine(); // 2.1.5
 
+            WriteLine("Press any key to continue...");
             ReadKey();
         }
 
@@ -65,5 +68,16 @@
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void WriteNum(int n) => Write($"{n} ");
+
+        /// <summary> 2.1.5 </summary>
+        private static void TestStateMachine()
+        {
+            IStateMachine s = new Repeat(new Sequence(new Wait(10), new Print("Hello world")));
+            while(!s.Done)
+            {
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+                s.Update(1);    // ^ lazy cheat so I don't have to install monogame :P
+            }
+        }
     }
 }

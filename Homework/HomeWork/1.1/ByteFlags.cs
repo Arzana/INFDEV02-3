@@ -36,10 +36,7 @@
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(ByteFlags other)
-        {
-            return val == other.val;
-        }
+        public bool Equals(ByteFlags other) => val == other.val;
 
         public override bool Equals(object obj)
         {
@@ -47,10 +44,7 @@
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override int GetHashCode()
-        {
-            return val;
-        }
+        public override int GetHashCode() => val;
 
         public override string ToString()
         {
