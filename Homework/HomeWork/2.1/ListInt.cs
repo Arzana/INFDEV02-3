@@ -168,6 +168,7 @@
             Marshal.FreeHGlobal((IntPtr)node);
         }
 
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private unsafe struct Node
         {
             public bool IsLast { get { return head == null; } }
