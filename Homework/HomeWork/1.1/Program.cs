@@ -2,8 +2,6 @@
 
 namespace _1._1
 {
-    using System;
-    using System.Text;
     using static System.Console;
     using static System.Math;
 
@@ -11,7 +9,9 @@ namespace _1._1
     {
         public static void Main(string[] args)
         {
-            //WriteTrgl();                                      // 1.1.1
+            //Drawing.RectTriangle(9);                          // 1.1.1
+
+            //Drawing.Smiley(10);                               // 1.1.2
 
             //WriteSum();                                       // 1.1.4
 
@@ -24,25 +24,8 @@ namespace _1._1
             //c.OnTarget(1, () => WriteLine("Second!"));
             //c++;
 
+            WriteLine("Press any key to continue...");
             ReadKey();
-        }
-
-        /// <summary> 1.1.1 </summary>
-        private static void WriteTrgl()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < 9; i++)
-            {
-                for (int j = 0; j < i; j++)
-                {
-                    sb.Append('*');
-                }
-
-                sb.Append(Environment.NewLine);
-            }
-
-            Write(sb.ToString());
         }
 
         /// <summary> 1.1.3 </summary>
