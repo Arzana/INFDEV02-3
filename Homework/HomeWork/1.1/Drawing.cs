@@ -8,6 +8,13 @@
     public static class Drawing
     {
         /// <summary> 1.1.2 </summary>
+        /// <remarks>
+        /// * : Face
+        /// _ : Eyebrow
+        /// 0 : Eye
+        /// - : Mouth
+        /// # : Nose
+        /// </remarks>
         public static void Smiley(int radius)
         {
             int d = radius << 1, d1 = d + 1;
