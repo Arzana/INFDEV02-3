@@ -108,6 +108,6 @@
             if (machine.Done) machine.Reset();
         }
 
-        public void Reset() { machine.Reset(); }
+        public void Reset() => machine.Reset();
     }
 }
