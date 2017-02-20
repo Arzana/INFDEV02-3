@@ -12,7 +12,7 @@
             //TestAnimals();      // 2.1.1
             //MoveVehicles();     // 2.1.3
             //TestNodeInt();      // 2.1.4
-            TestStateMachine(); // 2.1.5
+            //TestStateMachine(); // 2.1.5
 
             WriteLine("Press any key to continue...");
             ReadKey();
