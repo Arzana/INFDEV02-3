@@ -30,6 +30,18 @@
             start = DateTime.UtcNow;
         }
 
+        public void Reset()
+        {
+            start = null;
+            reached = false;
+        }
+
+        public void Restart()
+        {
+            start = DateTime.UtcNow;
+            reached = false;
+        }
+
         public bool Tick()
         {
             if (!reached)
@@ -43,12 +55,6 @@
             }
 
             return false;
-        }
-
-        public void Reset()
-        {
-            start = null;
-            reached = false;
         }
 
         private void InvokeEvents()
@@ -66,27 +72,30 @@
     {
         public Color LightColor { get; private set; }
 
+        public event EventHandler LightChanged;
+
         private Timer underlying;
 
-        public TraficLight(TimeSpan lightDelta)
+        public TraficLight()
         {
             underlying = new Timer(TimeSpan.FromSeconds(5));
-            ResetTimer();
-        }
+            LightColor = Color.Red;
 
-        public void Update()
-        {
-            if (underlying.Tick()) ResetTimer();
-        }
-
-        private void ResetTimer()
-        {
             underlying.AddEvent(() =>
             {
                 if (LightColor == Color.Red) LightColor = Color.Green;
                 else if (LightColor == Color.Green) LightColor = Color.Yellow;
                 else LightColor = Color.Red;
+
+                if (LightChanged != null) LightChanged.Invoke(this, EventArgs.Empty);
             });
+
+            underlying.Start();
+        }
+
+        public void Update()
+        {
+            if (underlying.Tick()) underlying.Restart();
         }
     }
 }

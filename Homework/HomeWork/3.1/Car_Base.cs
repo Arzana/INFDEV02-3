@@ -66,6 +66,7 @@
     public abstract class Car : Entity
     {
         public float DistanceTraveled { get; private set; }
+        public float TankLevel { get { return Tank.Amount; } }
 
         protected Engine Engine { get { return GetComp<Engine>(0); } }
         protected GearBox GearBox { get { return GetComp<GearBox>(1); } }
