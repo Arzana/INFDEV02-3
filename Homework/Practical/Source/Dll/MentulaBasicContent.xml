@@ -1,0 +1,654 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MentulaBasicContent</name>
+    </assembly>
+    <members>
+        <member name="T:Mentula.BasicContent.MMEditable">
+            <summary>
+            Represents a class or struct that can be saved as a .mm file.
+            </summary>
+        </member>
+        <member name="T:Mentula.BasicContent.MMIgnore">
+            <summary>
+            Represents a field or property that should be ignored when saving a class as a .mm file.
+            </summary>
+        </member>
+        <member name="T:Mentula.BasicContent.MMOptional">
+            <summary>
+            Represents a field or property that is optional in the .mm file.
+            </summary>
+        </member>
+        <member name="T:Mentula.BasicContent.AlternativeName">
+            <summary>
+            Represents a alternative name for a class, struct, field or property when saving or loading a class as a .mm file.
+            </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.AlternativeName.NewName">
+            <summary> The name to be used in conversion. </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.AlternativeName.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.AlternativeName"/> class with a specified name.
+            </summary>
+            <param name="name"> The new name to be used. </param>
+        </member>
+        <member name="T:Mentula.BasicContent.MMIsDefault">
+            <summary>
+            Represents a field or property the reader or writer should interpret as the default value when saving or loading a class as a .mm file.
+            </summary>
+        </member>
+        <member name="T:Mentula.BasicContent.MMIsName">
+            <summary>
+            Represents a field or property the reader or writer should interpret as the name of the container when saving or loading a class as a .mm file.
+            </summary>
+        </member>
+        <member name="T:Mentula.BasicContent.Config.ConfigLoader">
+            <summary>
+            A container for loading <see cref="T:Mentula.BasicContent.Config.Config"/> files.
+            </summary>
+        </member>
+        <member name="P:Mentula.BasicContent.Config.ConfigLoader.LastError">
+            <summary>
+            The last error thrown by the <see cref="T:Mentula.BasicContent.Config.ConfigLoader"/>.
+            </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.Config.ConfigLoader.Load(System.String,Mentula.BasicContent.Core.Runtime.Log,Mentula.BasicContent.Core.Runtime.Log,Mentula.BasicContent.Core.Runtime.Log)">
+            <summary>
+            Load a specified <see cref="T:Mentula.BasicContent.Config.Config"/> file.
+            </summary>
+            <param name="path"> The relative path to the <see cref="T:Mentula.BasicContent.Config.Config"/> file. </param>
+            <param name="msg"> The function used to log messages. </param>
+            <param name="war"> The function used to log warnings. </param>
+            <param name="err"> The function used to log errors. </param>
+            <returns> A <see cref="T:Mentula.BasicContent.Config.Config"/> file at the specified path, if an <see cref="T:Mentula.BasicContent.BuildException"/> occured; null. </returns>
+        </member>
+        <member name="T:Mentula.BasicContent.Config.Config">
+            <summary>
+            Represents a runtime loaded config file.
+            </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.Config.Config.GetVisual(System.String)">
+            <summary>
+            Gets the visual version of a config property.
+            </summary>
+            <param name="name"> The name of the property. </param>
+            <returns> A string representation of the properties value. </returns>
+        </member>
+        <member name="M:Mentula.BasicContent.Config.Config.Get``1(System.String)">
+            <summary>
+            Get the specified property as a specified type.
+            </summary>
+            <remarks> A property can only be loaded as one type or as string via <see cref="M:Mentula.BasicContent.Config.Config.GetVisual(System.String)"/>. </remarks>
+            <typeparam name="T"> The specified type of the property. </typeparam>
+            <param name="name"> The specified name of the property. </param>
+            <returns> The value of the property as T. </returns>
+            <exception cref="T:Mentula.BasicContent.ContainerException"> The value could not be found or the current type is not equal to its previous type. </exception>
+            <exception cref="T:System.NotSupportedException"> The value could not be converted 
+            (add a <see cref="T:System.ComponentModel.TypeConverter"/> to the <see cref="T:Mentula.BasicContent.Core.MentulaTypeDescriptor"/> if you wish to convert a custom value). </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Config.Config.Add(System.Collections.Generic.KeyValuePair{System.String,System.String}[])">
+            <summary>
+            Adds specified values to the config file.
+            </summary>
+            <remarks>
+            This method is used for config properties that are adden when the main config is already loaded.
+            These could be config properties that are stored on a server.
+            </remarks>
+            <param name="serverValues"> The specified properties. </param>
+        </member>
+        <member name="M:Mentula.BasicContent.Config.Config.GetClient">
+            <summary>
+            Gets the properties specified as client required.
+            </summary>
+            <remarks>
+            Client marked properties are properties that should be send to the client from the server.
+            </remarks>
+            <returns> The properties that should be send to the client. </returns>
+        </member>
+        <member name="M:Mentula.BasicContent.Config.Config.GetCategories">
+            <summary>
+            Gets the underlying config categories.
+            </summary>
+            <returns> The categories specified in the config file. </returns>
+        </member>
+        <member name="M:Mentula.BasicContent.Config.Config.GetKeysFromCategory(System.String)">
+            <summary>
+            Gets all the property keys from a specified category.
+            </summary>
+            <param name="category"> The specified category. </param>
+            <returns> The property keys from the spevified category. </returns>
+        </member>
+        <member name="T:Mentula.BasicContent.Core.MentulaTypeDescriptor">
+            <summary>
+            Containes functions for working with the <see cref="T:System.ComponentModel.TypeDescriptor"/>.
+            </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.Core.MentulaTypeDescriptor.GetFromString``1">
+            <summary>
+            Gets a <see cref="T:System.ComponentModel.TypeConverter"/> that can convert from string to the specified type T.
+            </summary>
+            <typeparam name="T"> The type to convert to. </typeparam>
+            <returns> The required converter. </returns>
+        </member>
+        <member name="M:Mentula.BasicContent.Core.MentulaTypeDescriptor.Get``1">
+            <summary>
+            Gets a <see cref="T:System.ComponentModel.TypeConverter"/> that can convert to the specified type T.
+            </summary>
+            <typeparam name="T"> The type to convert to. </typeparam>
+            <returns> The required converter. </returns>
+        </member>
+        <member name="M:Mentula.BasicContent.Core.MentulaTypeDescriptor.AssignTypeConverter``2">
+            <summary>
+            Adds a <see cref="T:System.ComponentModel.TypeConverter"/> to the default pool.
+            </summary>
+            <typeparam name="IType"> The type that the typeconverter can convert to. </typeparam>
+            <typeparam name="IConverterType"> The type of class that will handle the convertion. </typeparam>
+        </member>
+        <member name="T:Mentula.BasicContent.Core.Container">
+            <summary>
+            Represents a container for storing the data from a .mm file.
+            </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.Core.Container.Name">
+            <summary> The name the container. </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.Core.Container.DefaultValue">
+            <summary> The default value of the container. </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.Core.Container.Values">
+            <summary> The raw values of the container. </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.Core.Container.Childs">
+            <summary> The child containers of this container. </summary>
+        </member>
+        <member name="P:Mentula.BasicContent.Core.Container.DefaultSet">
+            <summary> Gets whether the default value has been set. </summary>
+        </member>
+        <member name="P:Mentula.BasicContent.Core.Container.IsUseless">
+            <summary> Gets whether the container is useless (no name or no underlying values). </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.Core.Container.TryGetValue(System.String,System.String@)">
+            <summary>
+            Tries to get a specific raw value.
+            </summary>
+            <param name="name"> The name of the raw value. </param>
+            <param name="value"> The string to assign the value. </param>
+            <returns> Whether the raw value was found. </returns>
+        </member>
+        <member name="M:Mentula.BasicContent.Core.Container.TryGetChild(System.String,Mentula.BasicContent.Core.Container@)">
+            <summary>
+            Tries to get a specific child container.
+            </summary>
+            <param name="name"> The name of the child container. </param>
+            <param name="value"> The container to assign the value. </param>
+            <returns> Whether the container was found. </returns>
+        </member>
+        <member name="M:Mentula.BasicContent.Core.Container.ToString">
+            <summary>
+            Returns a string that represents the current container.
+            </summary>
+            <returns> A string that represents the current container. </returns>
+        </member>
+        <member name="T:Mentula.BasicContent.Core.MMSource">
+            <summary>
+            Represents the compiled version of a .mm file.
+            </summary>
+        </member>
+        <member name="T:Mentula.BasicContent.Core.Runtime.Log">
+            <summary>
+            Represents a function used for logging content loading messages.
+            </summary>
+            <param name="msg"> Message being reported. </param>
+            <param name="args"> Arguments for the reported message </param>
+        </member>
+        <member name="T:Mentula.BasicContent.ParameterNullException">
+            <summary>
+            The exception that is thrown when a parameter is missing in a MentulaContent file.
+            </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.ParameterNullException.Parameter">
+            <summary> The parameter expected. </summary>
+        </member>
+        <member name="P:Mentula.BasicContent.ParameterNullException.StackTrace">
+            <summary> Gets a string representation of the immediate frames on the call stack. </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.ParameterNullException.#ctor">
+            <summary> 
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ParameterNullException"/> class 
+            with default arguments. 
+            </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.ParameterNullException.#ctor(System.String)">
+            <summary> 
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ParameterNullException"/> class 
+            with a specified parameter. 
+            </summary>
+            <param name="parameter"> The parameter expected. </param>
+        </member>
+        <member name="M:Mentula.BasicContent.ParameterNullException.#ctor(System.String,System.Exception)">
+            <summary> 
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ParameterNullException"/> class 
+            with a specified parameter and a inner exception. 
+            </summary>
+            <param name="parameter"> The parameter expected. </param>
+            <param name="inner"> The inner exception causing this exception. </param>
+        </member>
+        <member name="T:Mentula.BasicContent.ParameterException">
+            <summary>
+            The exception that is thrown when a parameter is invalid in a MentulaContent file.
+            </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.ParameterException.Type">
+            <summary> The type of the specified parameter. </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.ParameterException.Parameter">
+            <summary> The parameter expected. </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.ParameterException.Value">
+            <summary> The current value of the parameter. </summary>
+        </member>
+        <member name="P:Mentula.BasicContent.ParameterException.StackTrace">
+            <summary> Gets a string representation of the immediate frames on the call stack. </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.ParameterException.#ctor">
+            <summary> 
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ParameterException"/> class 
+            with default arguments. 
+            </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.ParameterException.#ctor(System.String,System.String,System.Type)">
+            <summary> 
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ParameterException"/> class 
+            with a specified parameter, the value of that parameter and the expected type. 
+            </summary>
+            <param name="parameter"> The parameter expected. </param>
+            <param name="value"> The current value of the parameter. </param>
+            <param name="type"> The type of parameter expected. </param>
+        </member>
+        <member name="M:Mentula.BasicContent.ParameterException.#ctor(System.String,System.String,System.Type,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ParameterException"/> class
+            with a specified parameter, the value of that parameter, the expected type and a inner exception.
+            </summary>
+            <param name="parameter"> The parameter expected. </param>
+            <param name="value"> The current value of the parameter. </param>
+            <param name="type"> The type of parameter expected. </param>
+            <param name="inner"> The inner exception causing this exception. </param>
+        </member>
+        <member name="T:Mentula.BasicContent.ContainerException">
+            <summary>
+            The exception that is thrown when processing a container fails in a MentulaContent file.
+            </summary>
+        </member>
+        <member name="F:Mentula.BasicContent.ContainerException.Container">
+            <summary> The container that caused the exception </summary>
+        </member>
+        <member name="P:Mentula.BasicContent.ContainerException.StackTrace">
+            <summary> Gets a string representation of the immediate frames on the call stack. </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.ContainerException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ContainerException"/> class 
+            with default arguments. 
+            </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.ContainerException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ContainerException"/> class 
+            with a specified container. 
+            </summary>
+            <param name="container"> The specified container. </param>
+        </member>
+        <member name="M:Mentula.BasicContent.ContainerException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ContainerException"/> class 
+            with a specified container and a inner exception. 
+            </summary>
+            <param name="container"> The specified container. </param>
+            <param name="inner"> The inner exception causing this exception. </param>
+        </member>
+        <member name="T:Mentula.BasicContent.BuildException">
+            <summary>
+            The exception that is thrown when processing a MentulaContent file fails.
+            </summary>
+        </member>
+        <member name="P:Mentula.BasicContent.BuildException.StackTrace">
+            <summary> Gets a string representation of the immediate frames on the call stack. </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.BuildException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.BuildException"/> class 
+            with default arguments. 
+            </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.BuildException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ContainerException"/> class 
+            with a specified message.
+            </summary>
+            <param name="message"> The message that describes the error. </param>
+        </member>
+        <member name="M:Mentula.BasicContent.BuildException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mentula.BasicContent.ContainerException"/> class 
+            with a specified message and a inner exception.
+            </summary>
+            <param name="message"> The message that describes the error. </param>
+            <param name="inner"> The inner exception causing this exception. </param>
+        </member>
+        <member name="T:Mentula.BasicContent.Reading.Utils">
+            <summary>
+            This class contains utility functions for reading a .mm file.
+            </summary>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.AsContainerException(System.Exception,System.String)">
+            <summary>
+            Converts the specified exception to a <see cref="T:Mentula.BasicContent.ContainerException"/>.
+            </summary>
+            <param name="e"> The specified exception. </param>
+            <param name="name"> The name of the container. </param>
+            <returns> <paramref name="e"/> as a <see cref="T:Mentula.BasicContent.ContainerException"/>. </returns>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.ConvertToInt16(System.String,System.String)">
+            <summary>
+            Tries to convert the specified value to a Int16.
+            </summary>
+            <param name="name"> The name of the parameter. </param>
+            <param name="value"> The value of the paramter. </param>
+            <returns> <paramref name="value"/> as a Int16. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> <paramref name="value"/> could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.ConvertToInt32(System.String,System.String)">
+            <summary>
+            Tries to convert the specified value to a Int32.
+            </summary>
+            <param name="name"> The name of the parameter. </param>
+            <param name="value"> The value of the paramter. </param>
+            <returns> <paramref name="value"/> as a Int32. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> <paramref name="value"/> could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.ConvertToInt64(System.String,System.String)">
+            <summary>
+            Tries to convert the specified value to a Int64.
+            </summary>
+            <param name="name"> The name of the parameter. </param>
+            <param name="value"> The value of the paramter. </param>
+            <returns> <paramref name="value"/> as a Int64. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> <paramref name="value"/> could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.ConvertToUInt16(System.String,System.String)">
+            <summary>
+            Tries to convert the specified value to a UInt16.
+            </summary>
+            <param name="name"> The name of the parameter. </param>
+            <param name="value"> The value of the paramter. </param>
+            <returns> <paramref name="value"/> as a UInt16. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> <paramref name="value"/> could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.ConvertToUInt32(System.String,System.String)">
+            <summary>
+            Tries to convert the specified value to a UInt32.
+            </summary>
+            <param name="name"> The name of the parameter. </param>
+            <param name="value"> The value of the paramter. </param>
+            <returns> <paramref name="value"/> as a UInt32. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> <paramref name="value"/> could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.ConvertToUInt64(System.String,System.String)">
+            <summary>
+            Tries to convert the specified value to a UInt64.
+            </summary>
+            <param name="name"> The name of the parameter. </param>
+            <param name="value"> The value of the paramter. </param>
+            <returns> <paramref name="value"/> as a UInt64. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> <paramref name="value"/> could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.ConvertToFloat(System.String,System.String)">
+            <summary>
+            Tries to convert the specified value to a Single.
+            </summary>
+            <param name="name"> The name of the parameter. </param>
+            <param name="value"> The value of the paramter. </param>
+            <returns> <paramref name="value"/> as a Single. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> <paramref name="value"/> could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.ConvertToBool(System.String,System.String)">
+            <summary>
+            Tries to convert the specified value to a Boolean.
+            </summary>
+            <param name="name"> The name of the parameter. </param>
+            <param name="value"> The value of the paramter. </param>
+            <returns> <paramref name="value"/> as a Boolean. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> <paramref name="value"/> could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.ConvertToColor(System.String,System.String)">
+            <summary>
+            Tries to convert the specified value to a Color.
+            </summary>
+            <param name="name"> The name of the parameter. </param>
+            <param name="value"> The value of the paramter. </param>
+            <returns> <paramref name="value"/> as a Color. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> <paramref name="value"/> could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetContainerName(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Get the name of the specified container.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The <see cref="F:Mentula.BasicContent.Core.Container.Name"/> attribute of the specified <see cref="T:Mentula.BasicContent.Core.Container"/>. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container has no name specified. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetStringValue(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the cotainer as a String.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as a String. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetInt16Value(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the container as a Int16.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as Int16. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetInt32Value(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the container as a Int32.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as Int32. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetInt64Value(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the container as a Int64.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as Int64. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetUInt16Value(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the container as a UInt16.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as UInt16. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetUInt32Value(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the container as a UInt32.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as UInt32. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetUInt64Value(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the container as a UInt64.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as UInt64. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetFloatValue(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the container as a Single.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as Single. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetBoolValue(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the container as a Boolean.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as Boolean. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetColorValue(Mentula.BasicContent.Core.Container,System.String)">
+            <summary>
+            Get a specified value from the container as a Color.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <param name="name"> The specified name of the value. </param>
+            <returns> The value as Color. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an argument with the specified name. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetStringDefault(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a String.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as String. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetInt16Default(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a Int16.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as Int16. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetInt32Default(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a Int32.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as Int132. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetInt64Default(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a Int64.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as Int64. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetUInt16Default(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a UInt16.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as UInt16. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetUInt32Default(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a UInt32.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as UInt32. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetUInt64Default(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a UInt64.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as UInt64. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetFloatDefault(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a Single.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as Single. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetBoolDefault(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a Boolean.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as Boolean. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.GetColorDefault(Mentula.BasicContent.Core.Container)">
+            <summary>
+            Gets the default value as a Color.
+            </summary>
+            <param name="cnt"> The specified container. </param>
+            <returns> The default value as Color. </returns>
+            <exception cref="T:Mentula.BasicContent.ParameterNullException"> The container does not contain an default value. </exception>
+            <exception cref="T:Mentula.BasicContent.ParameterException"> The value could not be converted. </exception>
+        </member>
+        <member name="M:Mentula.BasicContent.Reading.Utils.CheckProcessorType(System.String,Mentula.BasicContent.Core.MMSource)">
+            <summary>
+            Checks whether the right processor is selected for processing the .mm file.
+            </summary>
+            <param name="type"> The type of data required. </param>
+            <param name="source"> The conpiled source .mm file. </param>
+        </member>
+        <member name="T:Mentula.BasicContent.R.R">
+            <summary>
+            Represents a Resource config file.
+            </summary>
+            <remarks>
+            The key of the underlying <see cref="T:System.Collections.Generic.Dictionary`2"/> is the Int32 ID
+            and the value is the file name.
+            </remarks>
+        </member>
+        <member name="M:Mentula.BasicContent.R.R.GetTagId(System.String)">
+            <summary>
+            Gets the ID from the specified name.
+            </summary>
+            <param name="name"> The specified tag name. </param>
+            <returns> The ID of the tag when successfull otherwise; -1. </returns>
+        </member>
+    </members>
+</doc>
