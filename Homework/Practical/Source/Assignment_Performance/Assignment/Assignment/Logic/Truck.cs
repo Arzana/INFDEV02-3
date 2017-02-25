@@ -19,6 +19,7 @@
             DrawOrder = 1;
             Position = pos;
             Id = Side() ? 8 : 7;
+            game.Components.Add(this);
         }
 
         public override void Initialize()
@@ -27,6 +28,12 @@
             truck = new Vector3(-100 * Game.Renderer.Scale, 700 * Game.Renderer.Scale, MainGame.Config.Get<float>("TruckSpeedMod"));
 
             base.Initialize();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            Game.Components.Remove(this);
+            base.Dispose(disposing);
         }
 
         public void Start()

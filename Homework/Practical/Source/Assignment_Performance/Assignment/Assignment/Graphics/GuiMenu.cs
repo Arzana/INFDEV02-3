@@ -13,7 +13,9 @@
         public GuiMenu(MainGame game)
             : base(game)
         {
-            game.Components.Add(fpsCnt = new FpsCounter(game));
+            DrawOrder = 2;
+            fpsCnt = new FpsCounter(game);
+            game.Components.Add(this);
         }
 
         public override void Initialize()
@@ -35,9 +37,21 @@
             base.Initialize();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            fpsCnt.Dispose();
+            Game.Components.Remove(this);
+            base.Dispose(disposing);
+        }
+
         public override void Update(GameTime gameTime)
         {
             Fps.Text = $"Fps: {fpsCnt.AvrgFps}";
+            Mine.Text = $"Backlog: {Game.mine}";
+            Ikea.Text = $"Backlog: {Game.ikea}";
+
+            if (Game.mine.waitingTruck != null) TruckMine.Text = $"Trucks: {Game.mine.waitingTruck}";
+
             base.Update(gameTime);
         }
 

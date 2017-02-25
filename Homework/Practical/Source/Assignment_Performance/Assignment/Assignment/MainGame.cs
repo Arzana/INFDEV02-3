@@ -3,7 +3,6 @@ namespace Assignment
     using Graphics;
     using Logic;
     using Mentula.BasicContent.Config;
-    using Mentula.GuiItems.Items;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -20,10 +19,9 @@ namespace Assignment
         public MainGame()
         {
             Content.RootDirectory = "Content";
-
-            Components.Add(Renderer = new SpriteRenderer(this) { DrawOrder = 0 });
-            Components.Add(mine = new Mine(this) { DrawOrder = 1 });
-            Components.Add(ikea = new Ikea(this) { DrawOrder = 1 });
+            Renderer = new SpriteRenderer(this);
+            mine = new Mine(this);
+            ikea = new Ikea(this);
         }
 
         protected override void Initialize()
@@ -31,10 +29,20 @@ namespace Assignment
             Config = ConfigLoader.Load($"{Content.RootDirectory}\\Config.mm");
             IsMouseVisible = Config.Get<bool>("EnableMouse");
 
-            Components.Add(gui = new GuiMenu(this) { DrawOrder = 2 });
+            /* The GUI is added in initialize because it depends on the GraphicsDevice wich is not yet available in the constructor. */
+            gui = new GuiMenu(this);
             gui.Show();
 
             base.Initialize();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            Renderer.Dispose();
+            mine.Dispose();
+            ikea.Dispose();
+            gui.Dispose();
+            base.Dispose(disposing);
         }
 
         protected override void Update(GameTime gameTime)
@@ -49,11 +57,6 @@ namespace Assignment
             /* Handle keyboard input. */
             KeyboardState kState = Keyboard.GetState();
             if (kState.IsKeyDown(Keys.Escape)) Exit();
-
-            gui.Mine.Text = mine.ToString();
-            gui.Ikea.Text = ikea.ToString();
-
-            if (mine.waitingTruck != null) gui.TruckMine.Text = mine.waitingTruck.ToString();
 
             base.Update(gameTime);
         }

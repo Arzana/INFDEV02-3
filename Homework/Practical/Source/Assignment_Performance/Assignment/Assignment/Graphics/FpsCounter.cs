@@ -7,17 +7,18 @@
 
     public sealed class FpsCounter : DrawableMentulaGameComponent<MainGame>
     {
-        public float CurFps { get { return buffer.Peek(); } }
-        public float AvrgFps { get { return buffer.Average(); } }
+        public float CurFps { get; private set; }
+        public float AvrgFps { get; private set; }
 
         private Queue<float> buffer;
         private int buffLen;
 
         public FpsCounter(MainGame game)
-            :base(game)
+            : base(game)
         {
             DrawOrder = 0;
-            buffer = new Queue<float>(new float[] { 0 });
+            buffer = new Queue<float>();
+            game.Components.Add(this);
         }
 
         public override void Initialize()
@@ -26,13 +27,21 @@
             base.Initialize();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            Game.Components.Remove(this);
+            base.Dispose(disposing);
+        }
+
         public override void Draw(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (delta <= 0) return;
 
-            buffer.Enqueue(1.0f / delta);
+            buffer.Enqueue(CurFps = 1.0f / delta);
             if (buffer.Count > buffLen) buffer.Dequeue();
+
+            AvrgFps = buffer.Average();
 
             base.Draw(gameTime);
         }

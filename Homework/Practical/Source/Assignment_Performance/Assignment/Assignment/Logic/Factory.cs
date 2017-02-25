@@ -20,8 +20,10 @@
         protected Factory(MainGame game, int textureId)
             : base(game)
         {
+            DrawOrder = 1;
             Id = textureId;
             ProductsToShip = new List<TProduct>();
+            game.Components.Add(this);
         }
 
         public override void Initialize()
@@ -33,6 +35,13 @@
             productAmnt = MainGame.Config.Get<int>("FactoryProductionAmount");
 
             base.Initialize();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            waitingTruck?.Dispose();
+            Game.Components.Remove(this);
+            base.Dispose(disposing);
         }
 
         public override void Update(GameTime gameTime)
@@ -49,7 +58,7 @@
                     }
                 }
             }
-            else Game.Components.Add(waitingTruck = NewTruck());
+            else waitingTruck = NewTruck();
 
             if (ProductsToShip.Count > maxProducts) return;
             if ((waitTime += (float)gameTime.ElapsedGameTime.TotalSeconds) >= productionTime)
@@ -62,6 +71,7 @@
 
             base.Update(gameTime);
         }
+
         public override void Draw(GameTime gameTime)
         {
             Game.Renderer.DrawBatch(this);

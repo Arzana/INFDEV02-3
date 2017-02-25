@@ -25,7 +25,9 @@
         public SpriteRenderer(MainGame game)
             : base(game)
         {
+            DrawOrder = 0;
             graphics = new GraphicsDeviceManager(game);
+            game.Components.Add(this);
         }
 
         public override void Initialize()
@@ -36,6 +38,14 @@
             textures = TextureCollection.FromConfig(Game.Content, graphics.GraphicsDevice, "Textures");
 
             base.Initialize();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            textures.Dispose();
+            batch.Dispose();
+            Game.Components.Remove(this);
+            base.Dispose(disposing);
         }
 
         public void BeginDraw()

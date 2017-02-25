@@ -6,10 +6,11 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    public sealed class TextureCollection : Dictionary<int, Rectangle>
+    public sealed class TextureCollection : Dictionary<int, Rectangle>, IDisposable
     {
         public Texture2D Sheet { get; private set; }
 
@@ -21,7 +22,7 @@
         {
             get
             {
-                if (!ContainsKey(key)) return base[-1];
+                if (!ContainsKey(key)) throw new KeyNotFoundException($"Cannot find texture with ID: {key}!");
                 return base[key];
             }
         }
@@ -62,6 +63,12 @@
             coll.Add(elmnt.Key, text);
             if (text.Height > size.Height) size.Height = text.Height;
             size.Width += text.Width;
+        }
+
+        public void Dispose()
+        {
+            Sheet.Dispose();
+            Clear();
         }
 
         private void SetupSheet(Dictionary<int, Texture2D> textures)
