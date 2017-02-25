@@ -10,7 +10,7 @@
         public int CurrentCapacity { get; private set; }
 
         protected Container(int id, Vector2 pos, int maxCap)
-            : base(id, pos, new Vector2(.25f))
+            : base(id, pos, new Vector2(MainGame.Config.Get<float>("ContainerScale")))
         {
             MaxCapacity = maxCap;
         }

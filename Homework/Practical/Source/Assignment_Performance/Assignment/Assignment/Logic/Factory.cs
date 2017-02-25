@@ -9,19 +9,30 @@
         where TProduct : Container
     {
         public int Id { get; private set; }
-        public Vector2 Scale { get { return new Vector2(.5f); } }
+        public Vector2 Scale { get; private set; }
         public Vector2 Position { get; protected set; }
         public List<TProduct> ProductsToShip { get; private set; }
 
         public Truck waitingTruck;
-
-        private float waitTime;
+        private float waitTime, productionTime;
+        private int loadPerTick, maxProducts, productAmnt;
 
         protected Factory(MainGame game, int textureId)
             : base(game)
         {
             Id = textureId;
             ProductsToShip = new List<TProduct>();
+        }
+
+        public override void Initialize()
+        {
+            Scale = new Vector2(MainGame.Config.Get<float>("FactoryScale"));
+            loadPerTick = MainGame.Config.Get<int>("TruckLoadPerTick");
+            maxProducts = MainGame.Config.Get<int>("MaxFactoryBuffer");
+            productionTime = MainGame.Config.Get<float>("FactoryProductionTime");
+            productAmnt = MainGame.Config.Get<int>("FactoryProductionAmount");
+
+            base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
@@ -31,21 +42,21 @@
                 if (ProductsToShip.Count > 0)
                 {
                     TProduct lastProduct = ProductsToShip.Last();
-                    if (lastProduct.CurrentCapacity >= 100)
+                    if (lastProduct.CurrentCapacity >= loadPerTick)
                     {
-                        if (!waitingTruck.Load.AddContent(100)) waitingTruck = null;
-                        lastProduct.AddContent(-100);
+                        if (!waitingTruck.Load.AddContent(loadPerTick)) waitingTruck = null;
+                        lastProduct.AddContent(-loadPerTick);
                     }
                 }
             }
             else Game.Components.Add(waitingTruck = NewTruck());
 
-            if (ProductsToShip.Count > 4) return;
-            if ((waitTime += (float)gameTime.ElapsedGameTime.TotalSeconds) >= 1f)
+            if (ProductsToShip.Count > maxProducts) return;
+            if ((waitTime += (float)gameTime.ElapsedGameTime.TotalSeconds) >= productionTime)
             {
                 TProduct lastProduct = ProductsToShip.LastOrDefault();
-                if (lastProduct?.CurrentCapacity < lastProduct?.MaxCapacity) lastProduct.AddContent(110);
-                else ProductsToShip.Add(NewProduct());
+                if (lastProduct?.CurrentCapacity < lastProduct?.MaxCapacity) lastProduct.AddContent(productAmnt);
+                else ProductsToShip.Add(NewProduct(productAmnt));
                 waitTime = 0;
             }
 
@@ -63,7 +74,7 @@
             base.Draw(gameTime);
         }
 
-        protected abstract TProduct NewProduct();
+        protected abstract TProduct NewProduct(int amount);
         protected abstract Truck NewTruck();
 
         public override string ToString()

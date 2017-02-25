@@ -7,9 +7,11 @@
     {
         public int Id { get; private set; }
         public Vector2 Position { get; private set; }
-        public Vector2 Scale { get { return new Vector2(.25f); } }
+        public Vector2 Scale { get; private set; }
         public Vector2 Velocity { get; private set; }
         public Container Load;
+
+        private Vector3 truck;
 
         public Truck(MainGame game, Vector2 pos)
             : base(game)
@@ -19,9 +21,17 @@
             Id = Side() ? 8 : 7;
         }
 
+        public override void Initialize()
+        {
+            Scale = new Vector2(MainGame.Config.Get<float>("TruckScale"));
+            truck = new Vector3(-100 * Game.Renderer.Scale, 700 * Game.Renderer.Scale, MainGame.Config.Get<float>("TruckSpeedMod"));
+
+            base.Initialize();
+        }
+
         public void Start()
         {
-            Velocity = (Side() ? -Vector2.UnitX : Vector2.UnitX) * 16;
+            Velocity = (Side() ? -Vector2.UnitX : Vector2.UnitX) * truck.Z;
         }
 
         public override void Update(GameTime gameTime)
@@ -32,7 +42,7 @@
                 Position += vloc;
                 Load.Position += vloc;
 
-                if (Position.X < -100 || Position.X > 700) Game.Components.Remove(this);
+                if (Position.X < truck.X || Position.X > truck.Y) Game.Components.Remove(this);
             }
             else if (Load.CurrentCapacity == Load.MaxCapacity) Start();
 
@@ -52,6 +62,6 @@
             return Load.ToString();
         }
 
-        private bool Side() => Position.X > MainGame.Config.Get<int>("ResolutionWidth") >> 2;
+        private bool Side() => Position.Y > MainGame.Config.Get<int>("ResolutionHeight") >> 2;
     }
 }

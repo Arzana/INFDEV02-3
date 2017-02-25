@@ -5,7 +5,7 @@
     public sealed class ShippingContainer : Container
     {
         public ShippingContainer(int id, Vector2 pos)
-            : base(id, pos, 2000)
+            : base(id, pos, MainGame.Config.Get<int>("MaxPerShippingContainer"))
         { }
 
         public static ShippingContainer Blue(Vector2 pos)

@@ -5,7 +5,7 @@
     public sealed class Ore : Container
     {
         public Ore(Vector2 pos, int startCapacity)
-            : base(3, pos, 1000)
+            : base(3, pos, MainGame.Config.Get<int>("MaxOrePerContainer"))
         {
             AddContent(startCapacity);
         }

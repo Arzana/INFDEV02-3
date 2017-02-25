@@ -10,11 +10,13 @@
 
     public sealed class SpriteRenderer : DrawableMentulaGameComponent<MainGame>
     {
+        public float Scale { get; private set; }
+
         private int DisplayHeight { get { return graphics.GraphicsDevice.DisplayMode.Height; } }
         private int DisplayWidth { get { return graphics.GraphicsDevice.DisplayMode.Width; } }
 
         private const float DEG2RAD = 0.017453f;
-        private float scale, rot;
+        private float rot;
 
         private GraphicsDeviceManager graphics;
         private TextureCollection textures;
@@ -54,7 +56,7 @@
 
         private void InitSettings()
         {
-            scale = Config.Get<float>("DefaultScale");
+            Scale = Config.Get<float>("DefaultScale");
             rot = Config.Get<float>("DefaultRotation") * DEG2RAD;
 
             graphics.PreferredBackBufferHeight = Config.Get<int>("ResolutionHeight");
@@ -85,7 +87,7 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void DrawBatch(Rectangle source, Vector2 pos, Vector2 scale)
         {
-            batch.Draw(textures.Sheet, pos, source, Color.White, rot, Vector2.Zero, scale * this.scale, SpriteEffects.None, 0);
+            batch.Draw(textures.Sheet, pos, source, Color.White, rot, Vector2.Zero, scale * Scale, SpriteEffects.None, 0);
         }
     }
 }
