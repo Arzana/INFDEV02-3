@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment", "Assignment\Assignment\Assignment.csproj", "{11306E2A-667B-42C1-82DB-114C65F92A58}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "AssignmentContent", "Assignment\AssignmentContent\AssignmentContent.contentproj", "{F63DD944-1BCC-4B5D-BA5C-88165FA9DE93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssignmentContent", "Assignment\AssignmentContent\AssignmentContent.contentproj", "{F63DD944-1BCC-4B5D-BA5C-88165FA9DE93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

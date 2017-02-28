@@ -30,8 +30,11 @@ namespace Assignment
             IsMouseVisible = Config.Get<bool>("EnableMouse");
 
             /* The GUI is added in initialize because it depends on the GraphicsDevice wich is not yet available in the constructor. */
-            gui = new GuiMenu(this);
-            gui.Show();
+            if (Config.Get<bool>("EnableDebugText"))
+            {
+                gui = new GuiMenu(this);
+                gui.Show();
+            }
 
             base.Initialize();
         }
@@ -41,7 +44,7 @@ namespace Assignment
             Renderer.Dispose();
             mine.Dispose();
             ikea.Dispose();
-            gui.Dispose();
+            if (gui != null) gui.Dispose();
             base.Dispose(disposing);
         }
 

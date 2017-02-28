@@ -16,6 +16,7 @@
 		[EnableMouse: true]
 		[DefaultScale: 2]
 		[DefaultRotation: 0]
+		[EnableDebugText: true]
 	}
 
 	[Optimization]
