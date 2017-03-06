@@ -64,7 +64,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\FpsCounter.cs" />
     <Compile Include="Graphics\GuiMenu.cs" />
     <Compile Include="Graphics\SpriteRenderer.cs" />
     <Compile Include="Logic\Container.cs" />

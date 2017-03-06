@@ -14,7 +14,7 @@
 	[UI]
 	{
 		[EnableMouse: true]
-		[DefaultScale: 2]
+		[DefaultScale: 1.5]
 		[DefaultRotation: 0]
 		[EnableDebugText: true]
 	}

@@ -7,14 +7,12 @@
 
     public sealed class GuiMenu : Menu<MainGame>
     {
-        public Label Mine, Ikea, TruckMine, Fps;
-        private FpsCounter fpsCnt;
+        public Label Mine, Ikea, TruckMine;
 
         public GuiMenu(MainGame game)
             : base(game)
         {
             DrawOrder = 2;
-            fpsCnt = new FpsCounter(game);
             game.Components.Add(this);
         }
 
@@ -22,8 +20,7 @@
         {
             SetDefaultFont("MenuFont");
 
-            Fps = AddDefLbl();
-            Fps.MoveRelative(Anchor.Left | Anchor.Top);
+            AddFpsCounter().MoveRelative(Anchor.Top | Anchor.Left);
 
             Mine = AddDefLbl();
             Mine.Position = Game.mine.Position + new Vector2(0, (Mine.Height << 1) * Game.Renderer.Scale);
@@ -39,14 +36,12 @@
 
         protected override void Dispose(bool disposing)
         {
-            fpsCnt.Dispose();
             Game.Components.Remove(this);
             base.Dispose(disposing);
         }
 
         public override void Update(GameTime gameTime)
         {
-            Fps.Text = $"Fps: {fpsCnt.AvrgFps}";
             Mine.Text = $"Backlog: {Game.mine}";
             Ikea.Text = $"Backlog: {Game.ikea}";
 
