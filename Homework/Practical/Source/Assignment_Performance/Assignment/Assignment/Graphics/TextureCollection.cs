@@ -3,6 +3,7 @@
     using Mentula.BasicContent;
     using Mentula.BasicContent.R;
     using Mentula.GuiItems.Core;
+    using Mentula.GuiItems.Core.Structs;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
@@ -42,6 +43,7 @@
 
         public void LoadFromConfig(string name)
         {
+            Program.LogAgmnt("TextureCollection", $"loading {name}.mm", "Gphx");
             max = new Size(MainGame.Config.Get<int>("MaxTextureWidth"), MainGame.Config.Get<int>("MaxtextureHeight"));
 
             Dictionary<int, Texture2D> textures = new Dictionary<int, Texture2D>();
@@ -73,6 +75,7 @@
 
         private void SetupSheet(Dictionary<int, Texture2D> textures)
         {
+            Program.LogAgmnt("TextureCollection", "creating texture sheet", "Gphx");
             using (RenderTarget2D target = new RenderTarget2D(device, size.Width, size.Height))
             {
                 SpriteBatch sb = new SpriteBatch(device);
@@ -85,6 +88,7 @@
                 sb.Begin();
                 foreach (KeyValuePair<int, Texture2D> tile in textures)
                 {
+                    Program.LogAgmnt("TextureCollection", $"adding texture({tile.Key})", "Gphx");
                     sb.Draw(tile.Value, new Vector2(x, 0), Color.White);
                     Add(tile.Key, new Rectangle(x, 0, tile.Value.Width, tile.Value.Height));
                     x += tile.Value.Width;

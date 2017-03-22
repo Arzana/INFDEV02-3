@@ -28,6 +28,7 @@
 
         public override void Initialize()
         {
+            Program.LogAgmnt("Factory", $"initializing factory({Id})", "Logic");
             Scale = new Vector2(MainGame.Config.Get<float>("FactoryScale"));
             loadPerTick = MainGame.Config.Get<int>("TruckLoadPerTick");
             maxProducts = MainGame.Config.Get<int>("MaxFactoryBuffer");
@@ -39,6 +40,7 @@
 
         protected override void Dispose(bool disposing)
         {
+            Program.LogAgmnt("Factory", $"disposing factory({Id})", "Disp");
             waitingTruck?.Dispose();
             Game.Components.Remove(this);
             base.Dispose(disposing);
@@ -95,7 +97,7 @@
                 cur += ProductsToShip[i].CurrentCapacity;
                 max += ProductsToShip[i].MaxCapacity;
             }
-            return $"{cur}|{max}";
+            return $"{cur:0000}|{max}";
         }
     }
 }

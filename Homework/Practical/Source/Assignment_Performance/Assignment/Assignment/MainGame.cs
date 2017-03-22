@@ -26,6 +26,7 @@ namespace Assignment
 
         protected override void Initialize()
         {
+            Program.LogAgmnt("MainGame", $"loading config", "Logic");
             Config = ConfigLoader.Load($"{Content.RootDirectory}\\Config.mm");
             IsMouseVisible = Config.Get<bool>("EnableMouse");
 

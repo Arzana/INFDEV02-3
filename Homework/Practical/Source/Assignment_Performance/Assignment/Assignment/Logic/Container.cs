@@ -25,7 +25,7 @@
 
         public override string ToString()
         {
-            return $"{CurrentCapacity}|{MaxCapacity}";
+            return $"{CurrentCapacity:0000}|{MaxCapacity}";
         }
     }
 }

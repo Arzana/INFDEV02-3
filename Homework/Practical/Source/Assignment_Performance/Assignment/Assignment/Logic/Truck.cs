@@ -24,6 +24,7 @@
 
         public override void Initialize()
         {
+            Program.LogAgmnt("Truck", $"initializing truck({Id})", "Logic");
             Scale = new Vector2(MainGame.Config.Get<float>("TruckScale"));
             truck = new Vector3(-100 * Game.Renderer.Scale, 700 * Game.Renderer.Scale, MainGame.Config.Get<float>("TruckSpeedMod"));
 
@@ -32,6 +33,7 @@
 
         protected override void Dispose(bool disposing)
         {
+            Program.LogAgmnt("Truck", $"disposing truck({Id})", "Disp");
             Game.Components.Remove(this);
             base.Dispose(disposing);
         }

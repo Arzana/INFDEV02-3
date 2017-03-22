@@ -8,28 +8,32 @@
     public sealed class GuiMenu : Menu<MainGame>
     {
         public Label Mine, Ikea, TruckMine;
+        private FpsCounter fps;
 
         public GuiMenu(MainGame game)
             : base(game)
         {
             DrawOrder = 2;
             game.Components.Add(this);
+            fps = new FpsCounter();
         }
 
         public override void Initialize()
         {
             SetDefaultFont("MenuFont");
+            fps.Initialize();
 
-            AddFpsCounter().MoveRelative(Anchor.Top | Anchor.Left);
-
-            Mine = AddDefLbl();
+            Mine = AddDefLbl("LblMine");
             Mine.Position = Game.mine.Position + new Vector2(0, (Mine.Height << 1) * Game.Renderer.Scale);
+            Mine.Text = $"Backlog: null";
 
-            Ikea = AddDefLbl();
+            Ikea = AddDefLbl("LblIkea");
             Ikea.Position = Game.ikea.Position - new Vector2(0, (Ikea.Height >> 1) * Game.Renderer.Scale);
+            Ikea.Text = $"Backlog: null";
 
-            TruckMine = AddDefLbl();
-            TruckMine.MoveRelative(Anchor.Middle);
+            TruckMine = AddDefLbl("LblTrucks");
+            TruckMine.MoveRelative(Anchor.Center);
+            TruckMine.Text = $"Trucks: null";
 
             base.Initialize();
         }
@@ -50,12 +54,21 @@
             base.Update(gameTime);
         }
 
-        private Label AddDefLbl()
+        public override void Draw(GameTime gameTime)
         {
-            Label btn = AddLabel();
-            btn.AutoSize = true;
-            btn.BackColor = Color.Transparent;
-            return btn;
+            fps.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            DrawString($"Fps: {fps.AverageFps}", Vector2.Zero, Color.White);
+            base.Draw(gameTime);
+        }
+
+        private Label AddDefLbl(string name)
+        {
+            Label lbl = AddLabel();
+            lbl.Name = name;
+            lbl.AutoRefresh = true;
+            lbl.AutoSize = true;
+            lbl.BackColor = Color.Transparent;
+            return lbl;
         }
     }
 }

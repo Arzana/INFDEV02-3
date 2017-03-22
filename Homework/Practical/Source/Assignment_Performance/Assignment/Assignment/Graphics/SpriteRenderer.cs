@@ -32,6 +32,7 @@
 
         public override void Initialize()
         {
+            Program.LogAgmnt("SpriteRenderer", "initializing renderer", "Gphx");
             InitSettings();
 
             batch = new SpriteBatch(graphics.GraphicsDevice);
@@ -42,6 +43,7 @@
 
         protected override void Dispose(bool disposing)
         {
+            Program.LogAgmnt("SpriteRenderer", "disposing renderer", "Disp");
             textures.Dispose();
             batch.Dispose();
             Game.Components.Remove(this);
@@ -66,9 +68,7 @@
 
         private void InitSettings()
         {
-            Scale = Config.Get<float>("DefaultScale");
-            rot = Config.Get<float>("DefaultRotation") * DEG2RAD;
-
+            Program.LogAgmnt("SpriteRenderer", "initializing settings", "Gphx");
             graphics.PreferredBackBufferHeight = Config.Get<int>("ResolutionHeight");
             graphics.PreferredBackBufferWidth = Config.Get<int>("ResolutionWidth");
 
@@ -77,6 +77,10 @@
                 if (graphics.PreferredBackBufferHeight > DisplayHeight) graphics.PreferredBackBufferHeight = DisplayHeight;
                 if (graphics.PreferredBackBufferWidth > DisplayWidth) graphics.PreferredBackBufferWidth = DisplayWidth;
             }
+
+            if (Config.Get<bool>("AutoScale")) Scale = graphics.PreferredBackBufferWidth / 800f;
+            else Scale = Config.Get<float>("DefaultScale");
+            rot = Config.Get<float>("DefaultRotation") * DEG2RAD;
 
             if (!Config.Get<bool>("Vsync"))
             {
